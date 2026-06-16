@@ -15,7 +15,7 @@ permissions:
 
 env:
   CARGO_TERM_COLOR: always
-  VERSION: v0.5.0
+  VERSION: 0.5.0
 
 jobs:
   build:

@@ -1,0 +1,97 @@
+name: Build & Release Surge
+
+on:
+  push:
+    tags: [ "v*" ]
+  workflow_dispatch:
+    inputs:
+      source_url:
+        description: "URL del tarball cifrado del source (.tar.gz.gpg)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+  VERSION: v0.5.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo (for helpers)
+      uses: actions/checkout@v4
+
+    - name: Install system dependencies
+      run: sudo apt-get update && sudo apt-get install -y libfontconfig-dev libwayland-dev libxkbcommon-dev libgtk-3-dev
+
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        toolchain: stable
+
+    - name: Download encrypted source
+      run: |
+        if [ -n "${{ github.event.inputs.source_url }}" ]; then
+          curl -fsSL "${{ github.event.inputs.source_url }}" -o source.tar.gz.gpg
+        else
+          gh release download "${{ github.ref_name }}" --repo ${{ github.repository }} \
+            --pattern "source-*.tar.gz.gpg" -O source.tar.gz.gpg
+        fi
+        ls -la source.tar.gz.gpg
+
+    - name: Decrypt source
+      env:
+        PASSPHRASE: ${{ secrets.SOURCE_DECRYPT_PASSPHRASE }}
+      run: |
+        echo "$PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 \
+          -o source.tar.gz -d source.tar.gz.gpg
+        mkdir source
+        tar xzf source.tar.gz -C source
+
+    - name: Build CLI (surge) — ofuscado
+      working-directory: source
+      run: |
+        RUSTFLAGS="-C link-args=-Wl,-z,norelro" \
+        cargo build --release --bin surge
+        strip target/release/surge
+
+    - name: Save CLI binary
+      run: cp source/target/release/surge surge-cli
+
+    - name: Build GUI (surge + surge-ui) — ofuscado
+      working-directory: source
+      run: |
+        RUSTFLAGS="-C link-args=-Wl,-z,norelro" \
+        cargo build --release --features gui
+        strip target/release/surge
+        strip target/release/surge-ui
+
+    - name: Package CLI tarball
+      run: |
+        mkdir -p dist
+        cp surge-cli dist/surge
+        cp install.sh dist/
+        cp LICENSE dist/
+        tar czf surge-${VERSION}-linux-x86_64.tar.gz -C dist surge install.sh LICENSE
+        rm dist/*
+
+    - name: Package GUI tarball
+      run: |
+        cp source/target/release/surge dist/surge
+        cp source/target/release/surge-ui dist/surge-ui
+        cp install.sh dist/
+        cp LICENSE dist/
+        tar czf surge-${VERSION}-linux-x86_64-gui.tar.gz -C dist surge surge-ui install.sh LICENSE
+
+    - name: Upload assets to Release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: surge-*.tar.gz
+        tag: ${{ github.ref }}
+        overwrite: true
+        file_glob: true

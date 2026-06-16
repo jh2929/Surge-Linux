@@ -12,17 +12,15 @@ Surge no nació en un laboratorio corporativo. Nació de la mente de un desarrol
 
 La primera sesión comenzó a la **medianoche** y se extendió hasta las **2:00 am** — dos horas de silencio absoluto donde las bases del sistema tomaron forma. La segunda sesión ocurrió el **domingo siguiente, de 3:00 pm a 7:00 pm** — cuatro horas más donde cada pieza encontró su lugar.
 
-En una computadora común y corriente, sin más herramientas que las que cualquier desarrollador tiene a mano, nacieron el sistema de rutas, la interfaz visual, el panel de control y cada línea de código que ves hoy. Nació del rechazo a aceptar que el software moderno deba ser pesado para ser útil.
+En una computadora común y corriente, sin más herramientas que las que cualquier persona tiene a mano, nació este proyecto. Nació del rechazo a aceptar que el software moderno deba ser pesado para ser útil.
 
-Hacer que la primera versión funcional cobrara vida en seis horas no fue una casualidad ni un golpe de suerte; fue el resultado de meses de planificación mental silenciosa. Fue el proceso de desarmar el problema en la cabeza antes de tocar una sola tecla: entender que para unir un ecosistema fragmentado no hacía falta construir un contenedor gigante, sino diseñar un enfoque quirúrgico de bajo nivel.
+Hacer que la primera versión funcional cobrara vida en seis horas no fue una casualidad ni un golpe de suerte; fue el resultado de meses de planificación mental silenciosa. Fue el proceso de desarmar el problema en la cabeza antes de tocar una sola tecla: entender que para unir un ecosistema fragmentado no hacía falta construir un contenedor gigante, sino un enfoque más inteligente.
 
-Esa madrugada, cuando el código finalmente compiló sin errores, el cuerpo sintió el impacto de la adrenalina. Las manos sudando, el corazón acelerado y el temblor en las piernas no eran por cansancio; eran el peso de darse cuenta de que una solución agnóstica, ligera y limpia era posible sin gastar un solo euro, utilizando únicamente la lógica y la determinación de un adolescente que se negó a aceptar las limitaciones impuestas.
+Esa madrugada, cuando todo finalmente funcionó, el cuerpo sintió el impacto de la adrenalina. Las manos sudando, el corazón acelerado y el temblor en las piernas no eran por cansancio; eran el peso de darse cuenta de que una solución agnóstica, ligera y limpia era posible sin gastar un solo euro, utilizando únicamente la lógica y la determinación de un adolescente que se negó a aceptar las limitaciones impuestas.
 
 ## La Filosofía de la Ligereza
 
-Surge demuestra que la compatibilidad con cientos de distribuciones de Linux no requiere montañas de código condicional, sino abstracción inteligente. Cada decisión de diseño está subordinada a un principio fundamental: **la experiencia del usuario por encima de todo**.
-
-La interfaz responde en milisegundos, el panel de control consume menos recursos que un gestor de ventanas, y el instalador completo cabe en menos espacio que una foto.
+Cada decisión está subordinada a un principio fundamental: **la experiencia del usuario por encima de todo**.
 
 Este proyecto es una carta abierta a la comunidad de Linux. No nace para competir con los estándares existentes, sino para ofrecer una alternativa a los usuarios de entornos minimalistas que, como nosotros, creen que el alto rendimiento y la elegancia deben ir de la mano.
 

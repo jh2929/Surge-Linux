@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo (for helpers)
+    - name: Checkout repo
       uses: actions/checkout@v4
 
     - name: Install system dependencies
@@ -41,7 +41,6 @@ jobs:
           gh release download "${{ github.ref_name }}" --repo ${{ github.repository }} \
             --pattern "source-*.tar.gz.gpg" -O source.tar.gz.gpg
         fi
-        ls -la source.tar.gz.gpg
 
     - name: Decrypt source
       env:
@@ -55,9 +54,16 @@ jobs:
     - name: Build CLI (surge) — ofuscado
       working-directory: source
       run: |
-        RUSTFLAGS="-C link-args=-Wl,-z,norelro" \
+        RUSTFLAGS="-C link-args=-Wl,-z,norelro -C llvm-args=-enable-br-cond-fix=true" \
         cargo build --release --bin surge
-        strip target/release/surge
+
+    - name: Strip CLI
+      run: |
+        strip --strip-all --discard-locals -R .comment -R .note -R .gnu.hash -R .note.gnu.gold-version \
+          source/target/release/surge 2>/dev/null || true
+        llvm-objcopy --strip-all --strip-debug --strip-unneeded \
+          source/target/release/surge source/target/release/surge 2>/dev/null || true
+        chmod +x source/target/release/surge
 
     - name: Save CLI binary
       run: cp source/target/release/surge surge-cli
@@ -65,10 +71,18 @@ jobs:
     - name: Build GUI (surge + surge-ui) — ofuscado
       working-directory: source
       run: |
-        RUSTFLAGS="-C link-args=-Wl,-z,norelro" \
+        RUSTFLAGS="-C link-args=-Wl,-z,norelro -C llvm-args=-enable-br-cond-fix=true" \
         cargo build --release --features gui
-        strip target/release/surge
-        strip target/release/surge-ui
+
+    - name: Strip GUI binaries
+      run: |
+        for bin in surge surge-ui; do
+          strip --strip-all --discard-locals -R .comment -R .note -R .gnu.hash -R .note.gnu.gold-version \
+            source/target/release/$bin 2>/dev/null || true
+          llvm-objcopy --strip-all --strip-debug --strip-unneeded \
+            source/target/release/$bin source/target/release/$bin 2>/dev/null || true
+          chmod +x source/target/release/$bin
+        done
 
     - name: Package CLI tarball
       run: |

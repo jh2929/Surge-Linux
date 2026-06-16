@@ -34,6 +34,8 @@ jobs:
         toolchain: stable
 
     - name: Download encrypted source
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if [ -n "${{ github.event.inputs.source_url }}" ]; then
           curl -fsSL "${{ github.event.inputs.source_url }}" -o source.tar.gz.gpg

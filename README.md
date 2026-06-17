@@ -23,6 +23,14 @@ Surge está diseñado bajo la filosofía de la máxima eficiencia de recursos:
 - **Consumo en RAM (CLI):** Menos de **8 MB**.
 - **Peso de descarga:** Todo el instalador y el panel de control unificados en un paquete comprimido de solo **3.8 MB** para una descarga e instalación instantáneas.
 
+### Tabla Comparativa de Rendimiento
+
+| Gestor / Formato | RAM Mínima (GUI) | RAM Mínima (CLI) | Espacio en Disco (Base/Runtime) | Tamaño del Paquete (Base) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Surge** 📦 | **< 10 MB** (típico 7.5 MB) | **< 8 MB** | **0 MB** (Nativo / Sin runtimes) | **3.8 MB** (Todo en uno) |
+| **Flatpak** 🟦 | ~120 MB+ | N/A | ~500 MB - 2 GB (Runtimes) | ~80 MB - 300 MB |
+| **Snap** 🟧 | ~150 MB+ | ~30 MB+ | ~300 MB - 1 GB (Core snaps) | ~70 MB - 250 MB |
+
 ---
 
 ## Licencia

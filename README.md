@@ -16,6 +16,15 @@ Creado en **6 horas** por un desarrollador de **16 años** con una meta clara: m
 
 ---
 
+## Ultra-ligero y Eficiente ⚡
+
+Surge está diseñado bajo la filosofía de la máxima eficiencia de recursos:
+- **Consumo en RAM (GUI):** Menos de **10 MB** (RSS típico de ~7.5 MB y consumo físico único de **< 1 MB** en ejecución).
+- **Consumo en RAM (CLI):** Menos de **8 MB**.
+- **Peso de descarga:** Todo el instalador y el panel de control unificados en un paquete comprimido de solo **3.8 MB** para una descarga e instalación instantáneas.
+
+---
+
 ## Licencia
 
 Este software es de uso privado. Ver [LICENSE](LICENSE) para términos completos.

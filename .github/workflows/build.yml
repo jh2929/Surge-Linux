@@ -69,20 +69,18 @@ jobs:
     - name: Save CLI binary
       run: cp source/target/release/surge surge-cli
 
-    - name: Build GUI (surge + surge-ui) — ofuscado
+    - name: Build GUI (surge con dashboard) — ofuscado
       working-directory: source
       run: |
         cargo build --release --features gui
 
-    - name: Strip GUI binaries
+    - name: Strip GUI binary
       run: |
-        for bin in surge surge-ui; do
-          strip --strip-all --discard-locals -R .comment -R .note -R .gnu.hash -R .note.gnu.gold-version \
-            source/target/release/$bin 2>/dev/null || true
-          llvm-objcopy --strip-all --strip-debug --strip-unneeded \
-            source/target/release/$bin source/target/release/$bin 2>/dev/null || true
-          chmod +x source/target/release/$bin
-        done
+        strip --strip-all --discard-locals -R .comment -R .note -R .gnu.hash -R .note.gnu.gold-version \
+          source/target/release/surge 2>/dev/null || true
+        llvm-objcopy --strip-all --strip-debug --strip-unneeded \
+          source/target/release/surge source/target/release/surge 2>/dev/null || true
+        chmod +x source/target/release/surge
 
     - name: Package CLI tarball
       run: |
@@ -96,10 +94,9 @@ jobs:
     - name: Package GUI tarball
       run: |
         cp source/target/release/surge dist/surge
-        cp source/target/release/surge-ui dist/surge-ui
         cp install.sh dist/
         cp LICENSE dist/
-        tar czf surge-${VERSION}-linux-x86_64-gui.tar.gz -C dist surge surge-ui install.sh LICENSE
+        tar czf surge-${VERSION}-linux-x86_64-gui.tar.gz -C dist surge install.sh LICENSE
 
     - name: Upload assets to Release
       uses: svenstaro/upload-release-action@v2

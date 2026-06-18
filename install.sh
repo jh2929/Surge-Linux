@@ -29,17 +29,17 @@ log "Installing into: ${BINDIR}"
 mkdir -p "${BINDIR}"
 
 log "downloading surge..."
-download "${URL}" | tar xz -C "${BINDIR}" surge surge-ui
-chmod +x "${BINDIR}/surge" "${BINDIR}/surge-ui"
+download "${URL}" | tar xz -C "${BINDIR}" surge
+chmod +x "${BINDIR}/surge"
 
-log "creating desktop shortcut for surge-ui..."
+log "creating desktop shortcut for surge dashboard..."
 mkdir -p "${DESKTOPDIR}"
-cat <<EOF > "${DESKTOPDIR}/surge-ui.desktop"
+cat <<EOF > "${DESKTOPDIR}/surge-dashboard.desktop"
 [Desktop Entry]
 Type=Application
 Name=Surge Dashboard
 Comment=Manage applications installed via Surge
-Exec=${BINDIR}/surge-ui
+Exec=${BINDIR}/surge --dashboard
 Icon=surge
 Terminal=false
 Categories=Utility;Settings;PackageManager;

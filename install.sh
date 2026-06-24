@@ -15,9 +15,9 @@ die() { printf '\033[1;31m  error:\033[0m %s\n' "$1" >&2; exit 1; }
 
 download() {
     if command -v curl >/dev/null 2>&1; then
-        curl -fsSL "$1"
+        curl -fL "$1"
     elif command -v wget >/dev/null 2>&1; then
-        wget -qO- "$1"
+        wget -O- "$1"
     else
         die "neither curl nor wget found. Install one and retry."
     fi

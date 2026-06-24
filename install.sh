@@ -3,11 +3,11 @@
 set -e
 
 REPO="jh2929/Surge-Linux"
-VERSION="v0.7.2"
+VERSION="v0.7.3"
 BINDIR="${HOME}/.local/bin"
 DESKTOPDIR="${HOME}/.local/share/applications"
 
-URL="https://github.com/${REPO}/releases/download/${VERSION}/surge-0.7.2-linux-x86_64-gui.tar.gz"
+URL="https://github.com/${REPO}/releases/download/${VERSION}/surge-0.7.3-linux-x86_64-gui.tar.gz"
 
 log() { printf '\033[1;34m==>\033[0m %s\n' "$1"; }
 warn() { printf '\033[1;33m  warning:\033[0m %s\n' "$1"; }
